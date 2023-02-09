@@ -8,12 +8,50 @@ const { Post, Comment, User } = require("../models/");
 router.get("/", async (req, res) => {
   // TODO - retrieve all posts from the database
   // render the homepage template with the posts retrieved from the database
-  // refer to homepage.handlebars write the code to display the posts
-  res.render("homepage");
+  try {
+    const postData = await Post.findAll({
+      include: [
+        {
+          model: User,
+          attributes: ["name"],
+        },
+      ],
+    });
+    const posts = postData.map((post) => post.get({ plain: true }));
+    res.render("homepage", { posts });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // TODO - create a GET route for getting a single post with its id
 // this page can be viewed without logging in
+router.get("/post/:id", async (req, res) => {
+  // TODO - retrieve a single post from the database
+  // render the single post template with the post retrieved from the database
+  try {
+    const postData = await Post.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          attributes: ["name"],
+        },
+        {
+          model: Comment,
+          attributes: ["comment_text", "created_at"],
+          include: {
+            model: User,
+            attributes: ["name"],
+          },
+        },
+      ],
+    });
+    const post = postData.get({ plain: true });
+    res.render("single-post", { post });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 
 
