@@ -6,19 +6,21 @@ const { Post, Comment, User } = require("../models/");
 // TODO - work on GET route for getting all posts
 // this page can be viewed without logging in
 router.get("/", async (req, res) => {
-  // TODO - retrieve all posts from the database
-  // render the homepage template with the posts retrieved from the database
   try {
     const postData = await Post.findAll({
       include: [
         {
           model: User,
-          attributes: ["name"],
+          attributes: ["username"],
         },
       ],
     });
-    const posts = postData.map((post) => post.get({ plain: true }));
-    res.render("homepage", { posts });
+      const posts = postData.map((post) => post.get({ plain: true }));
+
+    res.render("homepage", {
+      posts,
+      loggedIn: req.session.loggedIn,
+    });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -27,27 +29,30 @@ router.get("/", async (req, res) => {
 // TODO - create a GET route for getting a single post with its id
 // this page can be viewed without logging in
 router.get("/post/:id", async (req, res) => {
-  // TODO - retrieve a single post from the database
-  // render the single post template with the post retrieved from the database
   try {
     const postData = await Post.findByPk(req.params.id, {
       include: [
         {
           model: User,
-          attributes: ["name"],
+          attributes: ["username"],
         },
         {
           model: Comment,
-          attributes: ["comment_text", "created_at"],
+          attributes: ["body", "createdAt"],
           include: {
             model: User,
-            attributes: ["name"],
-          },
-        },
+            attributes: ["username"],
+          }
+        }
       ],
     });
-    const post = postData.get({ plain: true });
-    res.render("single-post", { post });
+
+    const post = postData.get({ plain: true});
+
+    res.render("single-post", {
+      ...post,
+      loggedIn: req.session.loggedIn,
+    });
   } catch (err) {
     res.status(500).json(err);
   }

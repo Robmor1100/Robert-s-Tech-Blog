@@ -1,0 +1,23 @@
+<div class="container">
+<div class="col-md-12">
+    <h1 class="text-center">Edit post</h1>
+  </div>
+<form class="edit-post-form">
+  <div class="form-outline mb-4">
+    <label class="form-label" for="postTitle">Title</label>
+    <input type="title" id="post-title" class="form-control" value="{{post.title}}"/>
+  </div>
+
+
+  <div class="form-outline mb-4">
+    <label class="form-label" for="postBody">Content</label>
+    <textarea class="form-control" id="post-body" rows="4">{{post.body}}</textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-block mb-4 saveEdit" value="{{post.id}}" data-action="submit">Update!</button>
+</form>
+</div>
+</div>
+
+<script src="/js/edit-post.js"></script>
+    

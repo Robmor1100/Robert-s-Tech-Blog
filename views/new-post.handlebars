@@ -1,15 +1,22 @@
-<form action="/action_page.php">
-  <div class="mb-3 mt-3">
-    <label for="title" class="form-label">Title:</label>
-    <input type="text" class="form-control" id="title" placeholder="Enter title..." name="title">
+<div class="container">
+<div class="col-md-12">
+    <h1 class="text-center">Create a new post</h1>
   </div>
-  <div class="mb-3">
-    <label for="body" class="form-label">Content:</label>
-    <input type="text" class="form-control" id="body" placeholder="Enter post content..." name="body">
+<form class="new-post-form">
+  <div class="form-outline mb-4">
+    <label class="form-label" for="postTitle">Title</label>
+    <input type="title" id="post-title" class="form-control" />
   </div>
-   <div class="mb-3 mt-3">
-      <label for="comment">Comments:</label>
-      <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
-    </div>
-  <button type="submit" class="btn btn-primary"> + Post!</button>
+
+
+  <div class="form-outline mb-4">
+    <label class="form-label" for="postBody">Write something...</label>
+    <textarea class="form-control" id="post-body" rows="4"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-block mb-4">Create!</button>
 </form>
+</div>
+</div>
+    
+<script src="/js/new-post.js"></script>
